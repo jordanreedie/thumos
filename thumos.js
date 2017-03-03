@@ -3,7 +3,7 @@ const clm = require('clmtrackr')
 const pModel = require('./model_pca_20_svm.json')
 var raf = require('raf')
 
-var Thumos = function (videoId, overlayId, drawModel) {
+var Thumos = function (videoId, overlayId, drawModel, delta=500) {
   var self = this
   var video = document.getElementById(videoId)
   var overlay = document.getElementById(overlayId)
@@ -26,6 +26,8 @@ var Thumos = function (videoId, overlayId, drawModel) {
       var endPositions
       var startTime
       var endTime
+      var x_array = []
+      var y_array = []
       startTime = new Date()
       setTimeout(function deltas () {
         endPositions = positions
@@ -34,14 +36,20 @@ var Thumos = function (videoId, overlayId, drawModel) {
           for (var i = 0; i < startPositions.length; i++) {
             // find euclidean differences between start and end points and average that
             deltaPositions.push(Math.sqrt(Math.pow(endPositions[i][0] - startPositions[i][0], 2) + Math.pow(endPositions[i][1] - startPositions[i][1], 2)))
+            x_array.push(endPositions[i][0])
+            y_array.push(endPositions[i][1])
           }
           if (deltaPositions && deltaPositions.length) {
             var faceDelta = deltaPositions.reduce(function (a, b) { return a + b }) / deltaPositions.length
-            self.trigger('faceMoving', {'start': startTime, 'end': endTime, 'now': new Date(), 'delta': faceDelta, 'array': deltaPositions})
+            self.trigger('faceMoving', {'now': new Date(),
+                                        'delta': faceDelta,
+                                        'array': deltaPositions,
+                                        'x_array': x_array,
+                                        'y_array': y_array})
           }
         }
-      }, 5000)
-    }, 5000)
+      }, delta)
+    }, delta)
   }
 
   function update () {
