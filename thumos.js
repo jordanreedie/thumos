@@ -44,8 +44,8 @@ var Thumos = function (videoId, overlayId, drawModel, delta=500) {
             self.trigger('faceMoving', {'now': new Date(),
                                         'delta': faceDelta,
                                         'array': deltaPositions,
-                                        'x_array': x_array,
-                                        'y_array': y_array})
+                                        'xArray': x_array,
+                                        'yArray': y_array})
           }
         }
       }, delta)
