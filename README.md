@@ -24,6 +24,8 @@ It also emits data containing:
 - `data.now`: time event trigged
 - `data.delta`: integer representing average of all the euclidean differences from the start to end of the movement interval
 - `data.array`: array of position differences for every coordinate during the movement interval
+- `data.x_array`: array of x coordinates 
+- `data.y_array`: array of y coordinates
 
 ```javascript
 const Thumos = require('thumos')
