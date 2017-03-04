@@ -7,7 +7,9 @@ var Thumos = function (videoId, overlayId, drawModel, delta=500) {
   var self = this
   var video = document.getElementById(videoId)
   var overlay = document.getElementById(overlayId)
-  var overlayCC = overlay.getContext('2d')
+  if (drawModel) {
+    var overlayCC = overlay.getContext('2d')
+  }
   var positions
 
   var ctrack = new clm.tracker({useWebGL: true})
@@ -54,7 +56,9 @@ var Thumos = function (videoId, overlayId, drawModel, delta=500) {
 
   function update () {
     raf(update)
-    overlayCC.clearRect(0, 0, video.videoWidth, video.videoHeight)
+    if (drawModel) {
+      overlayCC.clearRect(0, 0, video.videoWidth, video.videoHeight)
+    }
     positions = ctrack.getCurrentPosition()
     if (positions && drawModel) {
       ctrack.draw(overlay)
