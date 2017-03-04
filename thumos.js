@@ -23,8 +23,6 @@ var Thumos = function (videoId, overlayId, drawModel, delta=500) {
 
   function emit () {
     setInterval(function () {
-      var deltaPositions = []
-      var startPositions = positions
       var endPositions
       var startTime
       var endTime
@@ -35,20 +33,14 @@ var Thumos = function (videoId, overlayId, drawModel, delta=500) {
         endPositions = positions
         if (endPositions && endPositions.length) {
           endTime = new Date()
-          for (var i = 0; i < startPositions.length; i++) {
-            // find euclidean differences between start and end points and average that
-            deltaPositions.push(Math.sqrt(Math.pow(endPositions[i][0] - startPositions[i][0], 2) + Math.pow(endPositions[i][1] - startPositions[i][1], 2)))
+          for (var i = 0; i < endPositions.length; i++) {
             x_array.push(endPositions[i][0])
             y_array.push(endPositions[i][1])
           }
-          if (deltaPositions && deltaPositions.length) {
-            var faceDelta = deltaPositions.reduce(function (a, b) { return a + b }) / deltaPositions.length
-            self.trigger('faceMoving', {'now': new Date(),
-                                        'delta': faceDelta,
-                                        'array': deltaPositions,
-                                        'xArray': x_array,
-                                        'yArray': y_array})
-          }
+          self.trigger('faceMoving',
+                       {'time': new Date(),
+                        'xArray': x_array,
+                        'yArray': y_array})
         }
       }, delta)
     }, delta)
