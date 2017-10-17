@@ -25,7 +25,7 @@
   "dependencies": {
     "alerts": "^0.1.3",
     "attachmediastream": "^1.4.2",
-    "clmtrackr": "git+https://github.com/andyinabox/clmtrackr.git",
+    "clmtrackr": "^1.1.2",
     "getusermedia": "^2.0.0",
     "jquery": "^3.1.1",
     "microevent": "^1.0.0",
